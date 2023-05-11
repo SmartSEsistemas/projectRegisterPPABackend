@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_01_URL")
+}
+
+model Planning_unit_measure {
+  id          Int    @id @default(autoincrement())
+  description String
+  entity_id   Int
+
+  @@map("planning_unit_measures")
+}
+
+model Planning_type_resp {
+  id            Int             @id @default(autoincrement())
+  description   String
+  nb_tce        String
+  default       Boolean
+  entity_id     Int
+  Planning_resp Planning_resp[]
+
+  @@map("planning_type_resps")
+}
+
+model Planning_resp {
+  id                    Int                @id @default(autoincrement())
+  natural_person_id     Int
+  Planning_type_resp    Planning_type_resp @relation(fields: [planning_type_resp_id], references: [id])
+  planning_type_resp_id Int
+  office                String
+  crc                   String
+  start_date            DateTime
+  final_date            DateTime
+  entity_id             Int
+
+  @@map("planning_resps")
+}
