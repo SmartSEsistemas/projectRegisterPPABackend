@@ -7,6 +7,7 @@ import { ResultResponseMessage } from "../../protocols/ResultResponseMessage.js"
 class PlanningRespService {
   async create(body: RespDTO): Promise<ResultResponseMessage> {
     if (!await this.findTypeResp(body.planning_type_resp_id)) throw new AppError('Tipo de responsável não cadastrado.');
+    // await prismaInstance.prisma().user.find({ where: { id: body.natural_person_id } })
     return await prismaInstance.prisma().planning_resp.create({ data: body })
       .then(() => ({ status: 'success', message: 'Responsável vinculádo.' }))
 
