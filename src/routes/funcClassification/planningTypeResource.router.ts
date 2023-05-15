@@ -1,5 +1,7 @@
 import { Router } from "express";
 import planningTypeResourceController from "../../controllers/funcClassification/PlanningTypeResourceController.js";
+import { permission } from "../../middlewares/permissions.js";
+
 const planningTypeResourceRouter = Router();
 
 /**
@@ -59,7 +61,7 @@ const planningTypeResourceRouter = Router();
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningTypeResourceRouter.post("/", planningTypeResourceController.register);
+planningTypeResourceRouter.post("/", permission(["create_type_resource"]), planningTypeResourceController.register);
 /**
  * @swagger
  *
@@ -102,7 +104,7 @@ planningTypeResourceRouter.post("/", planningTypeResourceController.register);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningTypeResourceRouter.put("/", planningTypeResourceController.update);
+planningTypeResourceRouter.put("/", permission(["update_type_resource"]), planningTypeResourceController.update);
 /**
  * @swagger
  *
@@ -140,7 +142,7 @@ planningTypeResourceRouter.put("/", planningTypeResourceController.update);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningTypeResourceRouter.get("/:id", planningTypeResourceController.show);
+planningTypeResourceRouter.get("/:id", permission(["get_type_resource"]), planningTypeResourceController.show);
 /**
  * @swagger
  *
@@ -178,6 +180,6 @@ planningTypeResourceRouter.get("/:id", planningTypeResourceController.show);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningTypeResourceRouter.delete("/:id", planningTypeResourceController.delete);
+planningTypeResourceRouter.delete("/:id", permission(["delete_type_resource"]), planningTypeResourceController.delete);
 
 export default planningTypeResourceRouter;

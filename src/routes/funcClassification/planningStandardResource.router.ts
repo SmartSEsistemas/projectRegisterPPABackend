@@ -1,5 +1,6 @@
 import { Router } from "express";
 import planningStandardResourceController from "../../controllers/funcClassification/PlanningStandardResourceController.js";
+import { permission } from "../../middlewares/permissions.js";
 
 const planningStandardResourceRouter = Router();
 
@@ -21,8 +22,8 @@ const planningStandardResourceRouter = Router();
  *             type: string
  *         size_level:
  *             type: number
- *         type:
- *             type: string
+ *         type_resource_id:
+ *             type: number
  *         type_tce:
  *             type: string
  *     Message:
@@ -59,7 +60,12 @@ const planningStandardResourceRouter = Router();
  *         description: Criar padrão de recurso
  *         required: true
  *         schema:
- *           $ref: '#/components/schemas/Standard_resource'
+ *           type: object
+ *           properties:
+ *             standards: 
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Standard_resource'        
  *     responses:
  *       201:
  *         description: Mensagem
@@ -70,7 +76,7 @@ const planningStandardResourceRouter = Router();
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningStandardResourceRouter.post("/", planningStandardResourceController.register);
+planningStandardResourceRouter.post("/", permission(["create_standard_revenue"]), planningStandardResourceController.register);
 /**
  * @swagger
  *
@@ -113,7 +119,7 @@ planningStandardResourceRouter.post("/", planningStandardResourceController.regi
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningStandardResourceRouter.put("/", planningStandardResourceController.update);
+planningStandardResourceRouter.put("/", permission(["update_standard_revenue"]), planningStandardResourceController.update);
 /**
  * @swagger
  *
@@ -140,7 +146,7 @@ planningStandardResourceRouter.put("/", planningStandardResourceController.updat
  *         description: Pegar informações sobre um padrão de recurso
  *         required: true
  *         schema:
- *           type: number
+ *           type: string
  *     responses:
  *       200:
  *         description: Padrão de recurso
@@ -151,7 +157,7 @@ planningStandardResourceRouter.put("/", planningStandardResourceController.updat
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningStandardResourceRouter.get("/:id", planningStandardResourceController.show);
+planningStandardResourceRouter.get("/:id", permission(["get_standard_revenue"]), planningStandardResourceController.show);
 /**
  * @swagger
  *
@@ -178,7 +184,7 @@ planningStandardResourceRouter.get("/:id", planningStandardResourceController.sh
  *         description: Deletar padrão de recurso
  *         required: true
  *         schema:
- *           type: number
+ *           type: string
  *     responses:
  *       200:
  *         description: Message
@@ -189,6 +195,6 @@ planningStandardResourceRouter.get("/:id", planningStandardResourceController.sh
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningStandardResourceRouter.delete("/:id", planningStandardResourceController.delete);
+planningStandardResourceRouter.delete("/:id", permission(["delete_standard_revenue"]), planningStandardResourceController.delete);
 
 export default planningStandardResourceRouter;

@@ -6,11 +6,11 @@ import authentication from "../middlewares/Authentication.js";
 const routes = Router();
 
 routes.use('/register',
-  // authentication.required,
+  authentication.required,
   registerRouter);
 
 routes.use('/func_classification',
-  authentication.required,
+  // authentication.required,
   funcClassificationRouter);
 
 routes.use((req: Request, res: Response, next: NextFunction) => {

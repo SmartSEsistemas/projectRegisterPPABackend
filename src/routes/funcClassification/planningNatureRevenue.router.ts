@@ -1,22 +1,39 @@
 import { Router } from "express";
-import planningMarkerController from "../../controllers/funcClassification/PlanningMarkerController.js";
+import planningNatureRevenueController from "../../controllers/funcClassification/PlanningNatureRevenueController.js";
 import { permission } from "../../middlewares/permissions.js";
-const planningMarkerRouter = Router();
+
+const planningNatureRevenueRouter = Router();
 
 /**
    * @swagger
    * tags:
-   *   name:  Planning_marker
-   *   description: Operações relacionadas aos planejamentos de marcador
+   *   name:  Planning_nature_revenue
+   *   description: Operações relacionadas aos planejamentos de natureza de receita
    * components:
    *   schemas:
-   *     Marker:
+   *     Nature_revenue:
    *       type: object
    *       properties:
+   *         number:
+   *             type: string
    *         description:
    *             type: string
-   *         default:
+   *         planning_type_resource_id:
+   *             type: string
+   *         deduction:
    *             type: boolean
+   *         nr_deduction:
+   *             type: string
+   *         year:
+   *             type: number
+   *         standard_resource_id:
+   *             type: string
+   *         start_date:
+   *             type: string
+   *             format: date-time
+   *         final_date:
+   *             type: string
+   *             format: date-time
    *     Message:
    *       type: object
    *       properties:
@@ -28,11 +45,11 @@ const planningMarkerRouter = Router();
 /**
    * @swagger
    *
-   * /func_classification/marker:
+   * /func_classification/nature_revenue:
    *   post:
-   *     summary: Criar marcador
-   *     description: Criar marcador
-   *     tags: [Planning_marker]
+   *     summary: Criar natureza de receita
+   *     description: Criar natureza de receita
+   *     tags: [Planning_nature_revenue]
    *     security:
    *       - entityNameHeader: []
    *     consumes:
@@ -47,11 +64,11 @@ const planningMarkerRouter = Router();
    *         type: string
    *         default: Nome da entidade
    *       - in: body
-   *         name: create_marker
-   *         description: Criar marcador
+   *         name: create_nature_revenue
+   *         description: Criar natureza de receita
    *         required: true
    *         schema:
-   *           $ref: '#/components/schemas/Marker'
+   *           $ref: '#/components/schemas/Nature_revenue'
    *     responses:
    *       201:
    *         description: Mensagem
@@ -62,15 +79,15 @@ const planningMarkerRouter = Router();
    *         schema:
    *           $ref: '#/components/schemas/Message'
    */
-planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerController.register);
+planningNatureRevenueRouter.post("/", permission(["create_nature_renevue"]), planningNatureRevenueController.register);
 /**
  * @swagger
  *
- * /func_classification/marker:
+ * /func_classification/nature_revenue:
  *   put:
- *     summary: Atualizar marcador
- *     description: Atualizar marcador
- *     tags: [Planning_marker]
+ *     summary: Atualizar natureza de receita
+ *     description: Atualizar natureza de receita
+ *     tags: [Planning_nature_revenue]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -85,16 +102,16 @@ planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerCont
  *         type: string
  *         default: Nome da entidade
  *       - in: body
- *         name: update_marker
- *         description: Atualizar marcador
+ *         name: update_nature_revenue
+ *         description: Atualizar natureza de receita
  *         required: true
  *         schema:
  *           type: object
  *           properties:
- *             marker_id:
+ *             resource_id:
  *               type: number
- *             marker:
- *               $ref: '#/components/schemas/Marker'
+ *             resource:
+ *               $ref: '#/components/schemas/Nature_revenue'
  *     responses:
  *       200:
  *         description: Mensagem
@@ -105,15 +122,15 @@ planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerCont
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.put("/", permission(["update_marker"]), planningMarkerController.update);
+planningNatureRevenueRouter.put("/", permission(["update_nature_renevue"]), planningNatureRevenueController.update);
 /**
  * @swagger
  *
- * /func_classification/marker/:id:
+ * /func_classification/nature_revenue/:id:
  *   get:
- *     summary: Pegar informações sobre um marcador
- *     description: Pegar informações sobre um marcador
- *     tags: [Planning_marker]
+ *     summary: Pegar informações sobre um natureza de receita
+ *     description: Pegar informações sobre um natureza de receita
+ *     tags: [Planning_nature_revenue]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -129,29 +146,29 @@ planningMarkerRouter.put("/", permission(["update_marker"]), planningMarkerContr
  *         default: Nome da entidade
  *       - in: param
  *         name: id
- *         description: Pegar informações sobre um marcador
+ *         description: Pegar informações sobre um natureza de receita
  *         required: true
  *         schema:
  *           type: number
  *     responses:
  *       200:
- *         description: Marcador
+ *         description: Natureza de receita
  *         schema:
- *           $ref: '#/components/schemas/Marker'
+ *           $ref: '#/components/schemas/Nature_revenue'
  *       400:
  *         description: Error
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerController.show);
+planningNatureRevenueRouter.get("/:id", permission(["get_nature_renevue"]), planningNatureRevenueController.show);
 /**
  * @swagger
  *
- * /func_classification/marker/:id:
+ * /func_classification/nature_revenue/:id:
  *   delete:
- *     summary: Deletar marcador
- *     description: Deletar marcador
- *     tags: [Planning_marker]
+ *     summary: Deletar natureza de receita
+ *     description: Deletar natureza de receita
+ *     tags: [Planning_nature_revenue]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -167,7 +184,7 @@ planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerContr
  *         default: Nome da entidade
  *       - in: param
  *         name: id
- *         description: Deletar marcador
+ *         description: Deletar natureza de receita
  *         required: true
  *         schema:
  *           type: number
@@ -181,6 +198,6 @@ planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerContr
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.delete("/:id", permission(["delete_marker"]), planningMarkerController.delete);
+planningNatureRevenueRouter.delete("/:id", permission(["delete_nature_renevue"]), planningNatureRevenueController.delete);
 
-export default planningMarkerRouter;
+export default planningNatureRevenueRouter;

@@ -1,12 +1,47 @@
 -- CreateTable
+CREATE TABLE "planning_unit_measures" (
+    "id" SERIAL NOT NULL,
+    "description" TEXT NOT NULL,
+    "entity_id" INTEGER NOT NULL,
+
+    CONSTRAINT "planning_unit_measures_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "planning_type_resps" (
+    "id" SERIAL NOT NULL,
+    "description" TEXT NOT NULL,
+    "nb_tce" TEXT NOT NULL,
+    "default" BOOLEAN NOT NULL,
+    "entity_id" INTEGER NOT NULL,
+
+    CONSTRAINT "planning_type_resps_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "planning_resps" (
+    "id" SERIAL NOT NULL,
+    "natural_person_id" INTEGER NOT NULL,
+    "planning_type_resp_id" INTEGER NOT NULL,
+    "office" TEXT NOT NULL,
+    "crc" TEXT NOT NULL,
+    "start_date" TIMESTAMP(3) NOT NULL,
+    "final_date" TIMESTAMP(3) NOT NULL,
+    "entity_id" INTEGER NOT NULL,
+
+    CONSTRAINT "planning_resps_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "planning_standard_resources" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
     "level" TEXT NOT NULL,
     "separator" TEXT NOT NULL,
     "size_level" INTEGER NOT NULL,
-    "type" TEXT NOT NULL,
     "type_tce" TEXT NOT NULL,
+    "number_of_standard" INTEGER NOT NULL,
+    "type" INTEGER NOT NULL,
 
     CONSTRAINT "planning_standard_resources_pkey" PRIMARY KEY ("id")
 );
@@ -41,7 +76,7 @@ CREATE TABLE "planning_sub_functions" (
     "id" SERIAL NOT NULL,
     "number" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "planning_functionId" INTEGER NOT NULL,
+    "planning_function_id" INTEGER NOT NULL,
     "year" INTEGER NOT NULL,
     "start_date" TIMESTAMP(3) NOT NULL,
     "final_date" TIMESTAMP(3) NOT NULL,
@@ -62,6 +97,7 @@ CREATE TABLE "planning_markers" (
 CREATE TABLE "planning_type_resources" (
     "id" SERIAL NOT NULL,
     "description" TEXT NOT NULL,
+    "planning_standard_resource_id" INTEGER NOT NULL,
 
     CONSTRAINT "planning_type_resources_pkey" PRIMARY KEY ("id")
 );
@@ -69,13 +105,14 @@ CREATE TABLE "planning_type_resources" (
 -- CreateTable
 CREATE TABLE "planning_resources" (
     "id" SERIAL NOT NULL,
-    "number" INTEGER NOT NULL,
+    "number" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "year" INTEGER NOT NULL,
     "start_date" TIMESTAMP(3) NOT NULL,
     "planning_type_resource_id" INTEGER NOT NULL,
-    "superavit" BOOLEAN NOT NULL,
-    "planning_id" INTEGER,
+    "superavit" BOOLEAN NOT NULL DEFAULT false,
+    "planning_resource_id" INTEGER,
+    "planning_standard_resource_id" INTEGER NOT NULL,
 
     CONSTRAINT "planning_resources_pkey" PRIMARY KEY ("id")
 );
@@ -92,7 +129,7 @@ CREATE TABLE "Planning_resource_x_markers" (
 -- CreateTable
 CREATE TABLE "planning_nature_costs" (
     "id" SERIAL NOT NULL,
-    "number" INTEGER NOT NULL,
+    "number" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "year" INTEGER NOT NULL,
@@ -127,7 +164,7 @@ CREATE TABLE "planning_standard_nr_costs" (
 -- CreateTable
 CREATE TABLE "planning_nature_revenues" (
     "id" SERIAL NOT NULL,
-    "number" INTEGER NOT NULL,
+    "number" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "deduction" BOOLEAN NOT NULL,
@@ -158,13 +195,16 @@ CREATE TABLE "Planning_nrresource_x_marker" (
 );
 
 -- AddForeignKey
-ALTER TABLE "planning_sub_functions" ADD CONSTRAINT "planning_sub_functions_planning_functionId_fkey" FOREIGN KEY ("planning_functionId") REFERENCES "planning_functions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "planning_resps" ADD CONSTRAINT "planning_resps_planning_type_resp_id_fkey" FOREIGN KEY ("planning_type_resp_id") REFERENCES "planning_type_resps"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "planning_sub_functions" ADD CONSTRAINT "planning_sub_functions_planning_function_id_fkey" FOREIGN KEY ("planning_function_id") REFERENCES "planning_functions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "planning_resources" ADD CONSTRAINT "planning_resources_planning_type_resource_id_fkey" FOREIGN KEY ("planning_type_resource_id") REFERENCES "planning_type_resources"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "planning_resources" ADD CONSTRAINT "planning_resources_planning_id_fkey" FOREIGN KEY ("planning_id") REFERENCES "planning_resources"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "planning_resources" ADD CONSTRAINT "planning_resources_planning_resource_id_fkey" FOREIGN KEY ("planning_resource_id") REFERENCES "planning_resources"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Planning_resource_x_markers" ADD CONSTRAINT "Planning_resource_x_markers_planning_resource_id_fkey" FOREIGN KEY ("planning_resource_id") REFERENCES "planning_resources"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,21 +1,26 @@
 import { Router } from "express";
-import planningMarkerController from "../../controllers/funcClassification/PlanningMarkerController.js";
 import { permission } from "../../middlewares/permissions.js";
-const planningMarkerRouter = Router();
+import planningNrRevenueXResourceController from "../../controllers/funcClassification/PlanningNrRevenueXResourceController.js";
+
+const planningNrRevenueXResourceRouter = Router();
 
 /**
    * @swagger
    * tags:
-   *   name:  Planning_marker
-   *   description: Operações relacionadas aos planejamentos de marcador
+   *   name:  Planning_nrrevenue_resource
+   *   description: Operações relacionadas aos planejamentos de natureza de receita X recurso X recurso
    * components:
    *   schemas:
-   *     Marker:
+   *     Nr_revenue_resource:
    *       type: object
    *       properties:
-   *         description:
-   *             type: string
-   *         default:
+   *         planning_nature_revenue_id:
+   *             type: number
+   *         planning_resource_id:
+   *             type: number
+   *         percentage:
+   *             type: number
+   *         required:
    *             type: boolean
    *     Message:
    *       type: object
@@ -28,11 +33,11 @@ const planningMarkerRouter = Router();
 /**
    * @swagger
    *
-   * /func_classification/marker:
+   * /func_classification/nrrevenue_x_resource:
    *   post:
-   *     summary: Criar marcador
-   *     description: Criar marcador
-   *     tags: [Planning_marker]
+   *     summary: Criar natureza de receita X recurso
+   *     description: Criar natureza de receita X recurso
+   *     tags: [Planning_nrrevenue_resource]
    *     security:
    *       - entityNameHeader: []
    *     consumes:
@@ -47,11 +52,11 @@ const planningMarkerRouter = Router();
    *         type: string
    *         default: Nome da entidade
    *       - in: body
-   *         name: create_marker
-   *         description: Criar marcador
+   *         name: create_nrrevenue_x_resource
+   *         description: Criar natureza de receita X recurso
    *         required: true
    *         schema:
-   *           $ref: '#/components/schemas/Marker'
+   *           $ref: '#/components/schemas/Nr_revenue_resource'
    *     responses:
    *       201:
    *         description: Mensagem
@@ -62,15 +67,15 @@ const planningMarkerRouter = Router();
    *         schema:
    *           $ref: '#/components/schemas/Message'
    */
-planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerController.register);
+planningNrRevenueXResourceRouter.post("/", permission(["create_nrrenevue_x_resource"]), planningNrRevenueXResourceController.register);
 /**
  * @swagger
  *
- * /func_classification/marker:
+ * /func_classification/nrrevenue_x_resource:
  *   put:
- *     summary: Atualizar marcador
- *     description: Atualizar marcador
- *     tags: [Planning_marker]
+ *     summary: Atualizar natureza de receita X recurso
+ *     description: Atualizar natureza de receita X recurso
+ *     tags: [Planning_nrrevenue_resource]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -85,16 +90,16 @@ planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerCont
  *         type: string
  *         default: Nome da entidade
  *       - in: body
- *         name: update_marker
- *         description: Atualizar marcador
+ *         name: update_nrrevenue_x_resource
+ *         description: Atualizar natureza de receita X recurso
  *         required: true
  *         schema:
  *           type: object
  *           properties:
- *             marker_id:
+ *             nrrevenue_resource_id:
  *               type: number
- *             marker:
- *               $ref: '#/components/schemas/Marker'
+ *             nrrevenue_resource:
+ *               $ref: '#/components/schemas/Nr_revenue_resource'
  *     responses:
  *       200:
  *         description: Mensagem
@@ -105,15 +110,15 @@ planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerCont
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.put("/", permission(["update_marker"]), planningMarkerController.update);
+planningNrRevenueXResourceRouter.put("/", permission(["update_nrrenevue_x_resource"]), planningNrRevenueXResourceController.update);
 /**
  * @swagger
  *
- * /func_classification/marker/:id:
+ * /func_classification/nrrevenue_x_resource/:id:
  *   get:
- *     summary: Pegar informações sobre um marcador
- *     description: Pegar informações sobre um marcador
- *     tags: [Planning_marker]
+ *     summary: Pegar informações sobre um natureza de receita X recurso
+ *     description: Pegar informações sobre um natureza de receita X recurso
+ *     tags: [Planning_nrrevenue_resource]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -129,29 +134,29 @@ planningMarkerRouter.put("/", permission(["update_marker"]), planningMarkerContr
  *         default: Nome da entidade
  *       - in: param
  *         name: id
- *         description: Pegar informações sobre um marcador
+ *         description: Pegar informações sobre um natureza de receita X recurso
  *         required: true
  *         schema:
  *           type: number
  *     responses:
  *       200:
- *         description: Marcador
+ *         description: Natureza de receita X recurso
  *         schema:
- *           $ref: '#/components/schemas/Marker'
+ *           $ref: '#/components/schemas/Nr_revenue_resource'
  *       400:
  *         description: Error
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerController.show);
+planningNrRevenueXResourceRouter.get("/:id", permission(["get_nrrenevue_x_resource"]), planningNrRevenueXResourceController.show);
 /**
  * @swagger
  *
- * /func_classification/marker/:id:
+ * /func_classification/nrrevenue_x_resource/:id:
  *   delete:
- *     summary: Deletar marcador
- *     description: Deletar marcador
- *     tags: [Planning_marker]
+ *     summary: Deletar natureza de receita X recurso
+ *     description: Deletar natureza de receita X recurso
+ *     tags: [Planning_nrrevenue_resource]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -167,7 +172,7 @@ planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerContr
  *         default: Nome da entidade
  *       - in: param
  *         name: id
- *         description: Deletar marcador
+ *         description: Deletar natureza de receita X recurso
  *         required: true
  *         schema:
  *           type: number
@@ -181,6 +186,6 @@ planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerContr
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.delete("/:id", permission(["delete_marker"]), planningMarkerController.delete);
+planningNrRevenueXResourceRouter.delete("/:id", permission(["delete_nrrenevue_x_resource"]), planningNrRevenueXResourceController.delete);
 
-export default planningMarkerRouter;
+export default planningNrRevenueXResourceRouter;

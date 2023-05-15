@@ -1,22 +1,23 @@
 import { Router } from "express";
-import planningMarkerController from "../../controllers/funcClassification/PlanningMarkerController.js";
+import planningNrCostXMarkerController from "../../controllers/funcClassification/PlanningNrCostXMarkerController.js";
 import { permission } from "../../middlewares/permissions.js";
-const planningMarkerRouter = Router();
+
+const planningNrCostXMarkerRouter = Router();
 
 /**
    * @swagger
    * tags:
-   *   name:  Planning_marker
-   *   description: Operações relacionadas aos planejamentos de marcador
+   *   name:  Planning_nrcost_x_marker
+   *   description: Operações relacionadas aos planejamentos de natureza de despesa X marcador
    * components:
    *   schemas:
-   *     Marker:
+   *     Cost_marker:
    *       type: object
    *       properties:
-   *         description:
-   *             type: string
-   *         default:
-   *             type: boolean
+   *         planning_nature_cost_id:
+   *             type: number
+   *         planning_marker_id:
+   *             type: number
    *     Message:
    *       type: object
    *       properties:
@@ -28,11 +29,11 @@ const planningMarkerRouter = Router();
 /**
    * @swagger
    *
-   * /func_classification/marker:
+   * /func_classification/nrcost_x_marker:
    *   post:
-   *     summary: Criar marcador
-   *     description: Criar marcador
-   *     tags: [Planning_marker]
+   *     summary: Criar natureza de despesa X marcador
+   *     description: Criar natureza de despesa X marcador
+   *     tags: [Planning_nrcost_x_marker]
    *     security:
    *       - entityNameHeader: []
    *     consumes:
@@ -47,11 +48,11 @@ const planningMarkerRouter = Router();
    *         type: string
    *         default: Nome da entidade
    *       - in: body
-   *         name: create_marker
-   *         description: Criar marcador
+   *         name: create_nrcost_x_marker
+   *         description: Criar recurso X natureza de despesa X marcador
    *         required: true
    *         schema:
-   *           $ref: '#/components/schemas/Marker'
+   *           $ref: '#/components/schemas/Cost_marker'
    *     responses:
    *       201:
    *         description: Mensagem
@@ -62,15 +63,15 @@ const planningMarkerRouter = Router();
    *         schema:
    *           $ref: '#/components/schemas/Message'
    */
-planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerController.register);
+planningNrCostXMarkerRouter.post("/", permission(["create_nrcost_x_marker"]), planningNrCostXMarkerController.register);
 /**
  * @swagger
  *
- * /func_classification/marker:
+ * /func_classification/nrcost_x_marker:
  *   put:
- *     summary: Atualizar marcador
- *     description: Atualizar marcador
- *     tags: [Planning_marker]
+ *     summary: Atualizar natureza de despesa X marcador
+ *     description: Atualizar natureza de despesa X marcador
+ *     tags: [Planning_nrcost_x_marker]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -85,16 +86,16 @@ planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerCont
  *         type: string
  *         default: Nome da entidade
  *       - in: body
- *         name: update_marker
- *         description: Atualizar marcador
+ *         name: update_nrcost_x_marker
+ *         description: Atualizar natureza de despesa X marcador
  *         required: true
  *         schema:
  *           type: object
  *           properties:
- *             marker_id:
+ *             nrcost_marker_id:
  *               type: number
- *             marker:
- *               $ref: '#/components/schemas/Marker'
+ *             nrcost_marker:
+ *               $ref: '#/components/schemas/Cost_marker'
  *     responses:
  *       200:
  *         description: Mensagem
@@ -105,15 +106,15 @@ planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerCont
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.put("/", permission(["update_marker"]), planningMarkerController.update);
+planningNrCostXMarkerRouter.put("/", permission(["update_nrcost_x_marker"]), planningNrCostXMarkerController.update);
 /**
  * @swagger
  *
- * /func_classification/marker/:id:
+ * /func_classification/nrcost_x_marker/:id:
  *   get:
- *     summary: Pegar informações sobre um marcador
- *     description: Pegar informações sobre um marcador
- *     tags: [Planning_marker]
+ *     summary: Pegar informações sobre um natureza de despesa X marcador
+ *     description: Pegar informações sobre um natureza de despesa X marcador
+ *     tags: [Planning_nrcost_x_marker]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -129,29 +130,29 @@ planningMarkerRouter.put("/", permission(["update_marker"]), planningMarkerContr
  *         default: Nome da entidade
  *       - in: param
  *         name: id
- *         description: Pegar informações sobre um marcador
+ *         description: Pegar informações sobre um natureza de despesa X marcador
  *         required: true
  *         schema:
  *           type: number
  *     responses:
  *       200:
- *         description: Marcador
+ *         description: natureza de despesa X marcador
  *         schema:
- *           $ref: '#/components/schemas/Marker'
+ *           $ref: '#/components/schemas/Cost_marker'
  *       400:
  *         description: Error
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerController.show);
+planningNrCostXMarkerRouter.get("/:id", permission(["get_nrcost_x_marker"]), planningNrCostXMarkerController.show);
 /**
  * @swagger
  *
- * /func_classification/marker/:id:
+ * /func_classification/nrcost_x_marker/:id:
  *   delete:
- *     summary: Deletar marcador
- *     description: Deletar marcador
- *     tags: [Planning_marker]
+ *     summary: Deletar natureza de despesa X marcador
+ *     description: Deletar natureza de despesa X marcador
+ *     tags: [Planning_nrcost_x_marker]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -167,7 +168,7 @@ planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerContr
  *         default: Nome da entidade
  *       - in: param
  *         name: id
- *         description: Deletar marcador
+ *         description: Deletar natureza de despesa X marcador
  *         required: true
  *         schema:
  *           type: number
@@ -181,6 +182,6 @@ planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerContr
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.delete("/:id", permission(["delete_marker"]), planningMarkerController.delete);
+planningNrCostXMarkerRouter.delete("/:id", permission(["delete_nrcost_x_marker"]), planningNrCostXMarkerController.delete);
 
-export default planningMarkerRouter;
+export default planningNrCostXMarkerRouter;

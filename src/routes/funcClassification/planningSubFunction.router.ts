@@ -1,5 +1,6 @@
 import { Router } from "express";
 import planningSubFunctionController from "../../controllers/funcClassification/PlanningSubFunctionController.js";
+import { permission } from "../../middlewares/permissions.js";
 
 const planningSubFunctionRouter = Router();
 
@@ -72,7 +73,7 @@ const planningSubFunctionRouter = Router();
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningSubFunctionRouter.post("/", planningSubFunctionController.register);
+planningSubFunctionRouter.post("/", permission(["create_sub_function"]), planningSubFunctionController.register);
 /**
  * @swagger
  *
@@ -115,7 +116,7 @@ planningSubFunctionRouter.post("/", planningSubFunctionController.register);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningSubFunctionRouter.put("/", planningSubFunctionController.update);
+planningSubFunctionRouter.put("/", permission(["update_sub_function"]), planningSubFunctionController.update);
 /**
  * @swagger
  *
@@ -153,7 +154,7 @@ planningSubFunctionRouter.put("/", planningSubFunctionController.update);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningSubFunctionRouter.get("/:id", planningSubFunctionController.show);
+planningSubFunctionRouter.get("/:id", permission(["get_sub_function"]), planningSubFunctionController.show);
 /**
  * @swagger
  *
@@ -191,6 +192,6 @@ planningSubFunctionRouter.get("/:id", planningSubFunctionController.show);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningSubFunctionRouter.delete("/:id", planningSubFunctionController.delete);
+planningSubFunctionRouter.delete("/:id", permission(["delete_sub_function"]), planningSubFunctionController.delete);
 
 export default planningSubFunctionRouter;

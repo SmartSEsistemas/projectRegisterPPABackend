@@ -1,22 +1,36 @@
 import { Router } from "express";
-import planningMarkerController from "../../controllers/funcClassification/PlanningMarkerController.js";
+import planningResourceController from "../../controllers/funcClassification/PlanningResourceController.js";
 import { permission } from "../../middlewares/permissions.js";
-const planningMarkerRouter = Router();
+
+const planningResourceRouter = Router();
 
 /**
    * @swagger
    * tags:
-   *   name:  Planning_marker
-   *   description: Operações relacionadas aos planejamentos de marcador
+   *   name:  Planning_resource
+   *   description: Operações relacionadas aos planejamentos de recurso
    * components:
    *   schemas:
-   *     Marker:
+   *     Resource:
    *       type: object
    *       properties:
+   *         number:
+   *             type: string
    *         description:
    *             type: string
-   *         default:
+   *         year:
+   *             type: number
+   *         start_date:
+   *             type: string
+   *             format: date-time
+   *         planning_type_resource_id:
+   *             type: number
+   *         superavit:
    *             type: boolean
+   *         planning_resource_id:
+   *             type: number
+   *         standard_resource_id:
+   *             type: string
    *     Message:
    *       type: object
    *       properties:
@@ -28,11 +42,11 @@ const planningMarkerRouter = Router();
 /**
    * @swagger
    *
-   * /func_classification/marker:
+   * /func_classification/resource:
    *   post:
-   *     summary: Criar marcador
-   *     description: Criar marcador
-   *     tags: [Planning_marker]
+   *     summary: Criar recurso
+   *     description: Criar recurso
+   *     tags: [Planning_resource]
    *     security:
    *       - entityNameHeader: []
    *     consumes:
@@ -47,11 +61,11 @@ const planningMarkerRouter = Router();
    *         type: string
    *         default: Nome da entidade
    *       - in: body
-   *         name: create_marker
-   *         description: Criar marcador
+   *         name: create_resource
+   *         description: Criar recurso
    *         required: true
    *         schema:
-   *           $ref: '#/components/schemas/Marker'
+   *           $ref: '#/components/schemas/Resource'
    *     responses:
    *       201:
    *         description: Mensagem
@@ -62,15 +76,15 @@ const planningMarkerRouter = Router();
    *         schema:
    *           $ref: '#/components/schemas/Message'
    */
-planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerController.register);
+planningResourceRouter.post("/", permission(["create_resource"]), planningResourceController.register);
 /**
  * @swagger
  *
- * /func_classification/marker:
+ * /func_classification/resource:
  *   put:
- *     summary: Atualizar marcador
- *     description: Atualizar marcador
- *     tags: [Planning_marker]
+ *     summary: Atualizar recurso
+ *     description: Atualizar recurso
+ *     tags: [Planning_resource]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -85,16 +99,16 @@ planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerCont
  *         type: string
  *         default: Nome da entidade
  *       - in: body
- *         name: update_marker
- *         description: Atualizar marcador
+ *         name: update_resource
+ *         description: Atualizar recurso
  *         required: true
  *         schema:
  *           type: object
  *           properties:
- *             marker_id:
+ *             resource_id:
  *               type: number
- *             marker:
- *               $ref: '#/components/schemas/Marker'
+ *             resource:
+ *               $ref: '#/components/schemas/Resource'
  *     responses:
  *       200:
  *         description: Mensagem
@@ -105,15 +119,15 @@ planningMarkerRouter.post("/", permission(["create_marker"]), planningMarkerCont
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.put("/", permission(["update_marker"]), planningMarkerController.update);
+planningResourceRouter.put("/", permission(["update_resource"]), planningResourceController.update);
 /**
  * @swagger
  *
- * /func_classification/marker/:id:
+ * /func_classification/resource/:id:
  *   get:
- *     summary: Pegar informações sobre um marcador
- *     description: Pegar informações sobre um marcador
- *     tags: [Planning_marker]
+ *     summary: Pegar informações sobre um recurso
+ *     description: Pegar informações sobre um recurso
+ *     tags: [Planning_resource]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -129,29 +143,29 @@ planningMarkerRouter.put("/", permission(["update_marker"]), planningMarkerContr
  *         default: Nome da entidade
  *       - in: param
  *         name: id
- *         description: Pegar informações sobre um marcador
+ *         description: Pegar informações sobre um recurso
  *         required: true
  *         schema:
  *           type: number
  *     responses:
  *       200:
- *         description: Marcador
+ *         description: Recurso
  *         schema:
- *           $ref: '#/components/schemas/Marker'
+ *           $ref: '#/components/schemas/Resource'
  *       400:
  *         description: Error
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerController.show);
+planningResourceRouter.get("/:id", permission(["get_resource"]), planningResourceController.show);
 /**
  * @swagger
  *
- * /func_classification/marker/:id:
+ * /func_classification/resource/:id:
  *   delete:
- *     summary: Deletar marcador
- *     description: Deletar marcador
- *     tags: [Planning_marker]
+ *     summary: Deletar recurso
+ *     description: Deletar recurso
+ *     tags: [Planning_resource]
  *     security:
  *       - entityNameHeader: []
  *     consumes:
@@ -167,7 +181,7 @@ planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerContr
  *         default: Nome da entidade
  *       - in: param
  *         name: id
- *         description: Deletar marcador
+ *         description: Deletar recurso
  *         required: true
  *         schema:
  *           type: number
@@ -181,6 +195,6 @@ planningMarkerRouter.get("/:id", permission(["get_marker"]), planningMarkerContr
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningMarkerRouter.delete("/:id", permission(["delete_marker"]), planningMarkerController.delete);
+planningResourceRouter.delete("/:id", permission(["delete_resource"]), planningResourceController.delete);
 
-export default planningMarkerRouter;
+export default planningResourceRouter;

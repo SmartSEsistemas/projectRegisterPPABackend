@@ -3,6 +3,6 @@ export interface StandardResourceDTO {
   level: string;
   separator: string;
   size_level: number
-  type: string;
+  type_resource_id: number;
   type_tce: string;
 }

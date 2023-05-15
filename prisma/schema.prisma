@@ -47,15 +47,14 @@ model Planning_resp {
 // Functional classification
 
 model Planning_standard_resource {
-  id                     Int                      @id @default(autoincrement())
-  description            String
-  level                  String
-  separator              String
-  size_level             Int
-  type                   String
-  type_tce               String
-  Planning_type_resource Planning_type_resource[]
-  Planning_resource      Planning_resource[]
+  id                 Int    @id @default(autoincrement())
+  description        String
+  level              String
+  separator          String
+  size_level         Int
+  type_tce           String
+  number_of_standard String
+  type_resource_id   Int
 
   @@map("planning_standard_resources")
 }
@@ -98,22 +97,21 @@ model Planning_sub_function {
 }
 
 model Planning_marker {
-  id                           Int                            @id @default(autoincrement())
-  description                  String
-  default                      Boolean
-  Planning_resource_x_marker   Planning_resource_x_marker[]
-  Planning_nrcost_x_marker     Planning_nrcost_x_marker[]
-  Planning_nrresource_x_marker Planning_nrresource_x_marker[]
+  id                          Int                           @id @default(autoincrement())
+  description                 String
+  default                     Boolean
+  Planning_resource_x_marker  Planning_resource_x_marker[]
+  Planning_nrcost_x_marker    Planning_nrcost_x_marker[]
+  Planning_nrrevenue_x_marker Planning_nrrevenue_x_marker[]
 
   @@map("planning_markers")
 }
 
 model Planning_type_resource {
-  id                            Int                        @id @default(autoincrement())
-  description                   String
-  Planning_resource             Planning_resource[]
-  Planning_standard_resource    Planning_standard_resource @relation(fields: [planning_standard_resource_id], references: [id])
-  planning_standard_resource_id Int
+  id                      Int                       @id @default(autoincrement())
+  description             String
+  Planning_resource       Planning_resource[]
+  Planning_nature_revenue Planning_nature_revenue[]
 
   @@map("planning_type_resources")
 }
@@ -126,7 +124,7 @@ model Planning_resource {
   start_date                    DateTime
   Planning_type_resource        Planning_type_resource          @relation(fields: [planning_type_resource_id], references: [id])
   planning_type_resource_id     Int
-  superavit                     Boolean
+  superavit                     Boolean                         @default(false)
   Planning_resource_x_marker    Planning_resource_x_marker[]
   Planning_nrrevenue_x_resource Planning_nrrevenue_x_resource[]
 
@@ -134,8 +132,7 @@ model Planning_resource {
   parent               Planning_resource?  @relation("ResourceToResource", fields: [planning_resource_id], references: [id])
   children             Planning_resource[] @relation("ResourceToResource")
 
-  Planning_standard_resource    Planning_standard_resource @relation(fields: [planning_standard_resource_id], references: [id])
-  planning_standard_resource_id Int
+  standard_resource_id String
 
   @@map("planning_resources")
 }
@@ -158,6 +155,7 @@ model Planning_nature_cost {
   year                     Int
   start_date               DateTime
   final_date               DateTime
+  standard_resource_id     String
   Planning_nrcost_x_marker Planning_nrcost_x_marker[]
 
   @@map("planning_nature_costs")
@@ -189,14 +187,17 @@ model Planning_nature_revenue {
   id                            Int                             @id @default(autoincrement())
   number                        String
   description                   String
-  type                          String
   deduction                     Boolean
   nr_deduction                  String
   year                          Int
   start_date                    DateTime
   final_date                    DateTime
   Planning_nrrevenue_x_resource Planning_nrrevenue_x_resource[]
-  Planning_nrresource_x_marker  Planning_nrresource_x_marker[]
+  Planning_nrrevenue_x_marker   Planning_nrrevenue_x_marker[]
+
+  Planning_type_resource    Planning_type_resource @relation(fields: [planning_type_resource_id], references: [id])
+  planning_type_resource_id Int
+  standard_resource_id      String
 
   @@map("planning_nature_revenues")
 }
@@ -207,16 +208,18 @@ model Planning_nrrevenue_x_resource {
   planning_nature_revenue_id Int
   Planning_resource          Planning_resource       @relation(fields: [planning_resource_id], references: [id])
   planning_resource_id       Int
+  percentage                 Int
+  required                   Boolean
 
   @@map("planning_nrrevenue_x_resources")
 }
 
-model Planning_nrresource_x_marker {
+model Planning_nrrevenue_x_marker {
   id                         Int                     @id @default(autoincrement())
   Planning_marker            Planning_marker         @relation(fields: [planning_marker_id], references: [id])
   planning_marker_id         Int
   Planning_nature_revenue    Planning_nature_revenue @relation(fields: [planning_nature_revenue_id], references: [id])
   planning_nature_revenue_id Int
 
-  @@map("Planning_nrresource_x_marker")
+  @@map("Planning_nrrevenue_x_marker")
 }

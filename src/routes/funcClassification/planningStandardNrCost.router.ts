@@ -1,5 +1,6 @@
 import { Router } from "express";
 import planningStandardNrCostController from "../../controllers/funcClassification/PlanningStandardNrCostController.js";
+import { permission } from "../../middlewares/permissions.js";
 
 const planningStandardNrCostRouter = Router();
 
@@ -70,7 +71,7 @@ const planningStandardNrCostRouter = Router();
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningStandardNrCostRouter.post("/", planningStandardNrCostController.register);
+planningStandardNrCostRouter.post("/", permission(["create_standard_nr_cost"]), planningStandardNrCostController.register);
 /**
  * @swagger
  *
@@ -113,7 +114,7 @@ planningStandardNrCostRouter.post("/", planningStandardNrCostController.register
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningStandardNrCostRouter.put("/", planningStandardNrCostController.update);
+planningStandardNrCostRouter.put("/", permission(["update_standard_nr_cost"]), planningStandardNrCostController.update);
 /**
  * @swagger
  *
@@ -151,7 +152,7 @@ planningStandardNrCostRouter.put("/", planningStandardNrCostController.update);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningStandardNrCostRouter.get("/:id", planningStandardNrCostController.show);
+planningStandardNrCostRouter.get("/:id", permission(["get_standard_nr_cost"]), planningStandardNrCostController.show);
 /**
  * @swagger
  *
@@ -189,6 +190,6 @@ planningStandardNrCostRouter.get("/:id", planningStandardNrCostController.show);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningStandardNrCostRouter.delete("/:id", planningStandardNrCostController.delete);
+planningStandardNrCostRouter.delete("/:id", permission(["delete_standard_nr_cost"]), planningStandardNrCostController.delete);
 
 export default planningStandardNrCostRouter;
