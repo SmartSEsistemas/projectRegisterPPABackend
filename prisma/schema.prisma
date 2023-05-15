@@ -223,3 +223,43 @@ model Planning_nrrevenue_x_marker {
 
   @@map("Planning_nrrevenue_x_marker")
 }
+
+// PPA
+
+model Planning_ppa_register {
+  id              Int     @id @default(autoincrement())
+  quadrennium     String
+  control_cost    String
+  control_revenue String
+  has_subaction   Boolean
+  sent            Boolean
+
+  Planning_law_ppa     Planning_law_ppa[]
+  Planning_law_alt_ppa Planning_law_alt_ppa[]
+
+  @@map("planning_ppa_registers")
+}
+
+model Planning_law_ppa {
+  id                       Int                   @id @default(autoincrement())
+  law                      String
+  date                     DateTime
+  type_local_publication   String
+  local_publication        String
+  Planning_ppa_register    Planning_ppa_register @relation(fields: [planning_ppa_register_id], references: [id])
+  planning_ppa_register_id Int
+
+  @@map("planning_law_ppas")
+}
+
+model Planning_law_alt_ppa {
+  id                       Int                   @id @default(autoincrement())
+  law                      String
+  date                     DateTime
+  type_local_publication   String
+  local_publication        String
+  Planning_ppa_register    Planning_ppa_register @relation(fields: [planning_ppa_register_id], references: [id])
+  planning_ppa_register_id Int
+
+  @@map("planning_law_alt_ppas")
+}
