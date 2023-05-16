@@ -1,5 +1,6 @@
 import { Router } from "express";
 import planningUnitMeasureController from "../../controllers/register/PlanningUnitMeasureController.js";
+import { permission } from "../../middlewares/permissions.js";
 
 const planningUnitMeasureRouter = Router();
 
@@ -62,7 +63,7 @@ const planningUnitMeasureRouter = Router();
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningUnitMeasureRouter.post("/", planningUnitMeasureController.register);
+planningUnitMeasureRouter.post("/", permission(["create_unit_measure"]), planningUnitMeasureController.register);
 /**
  * @swagger
  *
@@ -105,7 +106,7 @@ planningUnitMeasureRouter.post("/", planningUnitMeasureController.register);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningUnitMeasureRouter.put("/", planningUnitMeasureController.update);
+planningUnitMeasureRouter.put("/", permission(["update_unit_measure"]), planningUnitMeasureController.update);
 /**
  * @swagger
  *
@@ -143,7 +144,7 @@ planningUnitMeasureRouter.put("/", planningUnitMeasureController.update);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningUnitMeasureRouter.get("/:id", planningUnitMeasureController.unit);
+planningUnitMeasureRouter.get("/:id", permission(["get_unit_measure"]), planningUnitMeasureController.unit);
 /**
  * @swagger
  *
@@ -181,6 +182,6 @@ planningUnitMeasureRouter.get("/:id", planningUnitMeasureController.unit);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningUnitMeasureRouter.delete("/:id", planningUnitMeasureController.delete);
+planningUnitMeasureRouter.delete("/:id", permission(["delete_unit_measure"]), planningUnitMeasureController.delete);
 
 export default planningUnitMeasureRouter;

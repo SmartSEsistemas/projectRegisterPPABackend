@@ -1,3 +1,4 @@
+import { Planning_resp } from "@prisma/client";
 import { RespDTO } from "../../dto/register/RespDTO";
 import { TypeRespUpdateDTO } from "../../dto/register/TypeRespUpdateDTO";
 import { AppError } from "../../helper/AppError.js";
@@ -21,7 +22,7 @@ class PlanningRespService {
       .then(() => ({ status: 'success', message: 'Responsável atualizado.' }))
   }
 
-  async get(id: number): Promise<RespDTO | null> {
+  async get(id: number): Promise<Planning_resp | null> {
     return await prismaInstance.prisma().planning_resp.findUnique({ where: { id } })
   }
 
