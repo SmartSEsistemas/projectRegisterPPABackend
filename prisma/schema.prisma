@@ -35,7 +35,7 @@ model Planning_resp {
   Planning_type_resp    Planning_type_resp @relation(fields: [planning_type_resp_id], references: [id])
   planning_type_resp_id Int
   office                String
-  crc                   String
+  crc                   String?
   start_date            DateTime
   final_date            DateTime
   entity_id             Int
