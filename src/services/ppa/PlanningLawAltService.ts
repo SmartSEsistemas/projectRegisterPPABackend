@@ -1,3 +1,4 @@
+import { Planning_law_ppa } from "@prisma/client";
 import { LawDTO } from "../../dto/ppa/LawDTO";
 import { LawUpdateDTO } from "../../dto/ppa/LawUpdateDTO";
 import { AppError } from "../../helper/AppError.js";
@@ -21,7 +22,7 @@ class PlanningLawAltService {
       .catch(() => { throw new AppError("Alteração da lei não encontrada ou error ao atualizar.") })
   }
 
-  async get(id: number): Promise<LawDTO | null> {
+  async get(id: number): Promise<Planning_law_ppa | null> {
     return await prismaInstance.prisma().planning_law_alt_ppa.findUnique({ where: { id } })
   }
 

@@ -18,6 +18,7 @@ const planningLawAltRouter = Router();
  *             type: string
  *         type_local_publication:
  *             type: string
+ *             enum: ['DIARIO ESTADO', 'DIARIO MUNICIPIO', 'PLACAR', 'JORNAL DE CIRCULAÇÃO', 'SITE']
  *         local_publication:
  *             type: string
  *         planning_ppa_register_id:
