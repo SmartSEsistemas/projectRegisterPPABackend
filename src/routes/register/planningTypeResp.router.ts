@@ -1,5 +1,6 @@
 import { Router } from "express";
 import planningTypeRespController from "../../controllers/register/PlanningTypeRespController.js";
+import { permission } from "../../middlewares/permissions.js";
 
 const planningTypeRespRouter = Router();
 
@@ -66,7 +67,7 @@ const planningTypeRespRouter = Router();
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningTypeRespRouter.post("/", planningTypeRespController.register);
+planningTypeRespRouter.post("/", permission(["create_plan_type_resp"]), planningTypeRespController.register);
 /**
  * @swagger
  *
@@ -109,7 +110,7 @@ planningTypeRespRouter.post("/", planningTypeRespController.register);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningTypeRespRouter.put("/", planningTypeRespController.update);
+planningTypeRespRouter.put("/", permission(["update_plan_type_resp"]), planningTypeRespController.update);
 /**
  * @swagger
  *
@@ -147,7 +148,7 @@ planningTypeRespRouter.put("/", planningTypeRespController.update);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningTypeRespRouter.get("/:id", planningTypeRespController.typeResp);
+planningTypeRespRouter.get("/:id", permission(["get_plan_type_resp"]), planningTypeRespController.typeResp);
 /**
  * @swagger
  *
@@ -185,6 +186,6 @@ planningTypeRespRouter.get("/:id", planningTypeRespController.typeResp);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningTypeRespRouter.delete("/:id", planningTypeRespController.delete);
+planningTypeRespRouter.delete("/:id", permission(["delete_plan_type_resp"]), planningTypeRespController.delete);
 
 export default planningTypeRespRouter;

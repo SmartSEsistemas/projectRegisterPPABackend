@@ -1,5 +1,6 @@
 import { Router } from "express";
 import planningRespController from "../../controllers/register/PlanningRespController.js";
+import { permission } from "../../middlewares/permissions.js";
 
 const planningRespRouter = Router();
 
@@ -21,6 +22,7 @@ const planningRespRouter = Router();
  *             type: string
  *         crc:
  *             type: string
+ *             optional: true
  *         start_date:
  *             type: string
  *             format: date-time
@@ -74,7 +76,7 @@ const planningRespRouter = Router();
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningRespRouter.post("/", planningRespController.register);
+planningRespRouter.post("/", permission(["create_plan_resp"]), planningRespController.register);
 /**
  * @swagger
  *
@@ -117,7 +119,7 @@ planningRespRouter.post("/", planningRespController.register);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningRespRouter.put("/", planningRespController.update);
+planningRespRouter.put("/", permission(["update_plan_resp"]), planningRespController.update);
 /**
  * @swagger
  *
@@ -155,7 +157,7 @@ planningRespRouter.put("/", planningRespController.update);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningRespRouter.get("/:id", planningRespController.resp);
+planningRespRouter.get("/:id", permission(["get_plan_resp"]), planningRespController.resp);
 /**
  * @swagger
  *
@@ -193,6 +195,6 @@ planningRespRouter.get("/:id", planningRespController.resp);
  *         schema:
  *           $ref: '#/components/schemas/Message'
  */
-planningRespRouter.delete("/:id", planningRespController.delete);
+planningRespRouter.delete("/:id", permission(["delete_plan_resp"]), planningRespController.delete);
 
 export default planningRespRouter;
