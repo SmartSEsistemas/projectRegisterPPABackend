@@ -27,7 +27,7 @@ model Planning_type_resp {
   entity_id     Int
   Planning_resp Planning_resp[]
 
-  @@map("planning_type_resps")
+  @@map("planning_type_resp")
 }
 
 model Planning_resp {

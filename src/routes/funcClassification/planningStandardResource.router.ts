@@ -20,6 +20,7 @@ const planningStandardResourceRouter = Router();
  *             type: string
  *         separator:
  *             type: string
+ *             enum: ['.', ',', ';', '-']
  *         size_level:
  *             type: number
  *         type_resource_id:

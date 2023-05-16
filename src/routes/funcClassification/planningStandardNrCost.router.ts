@@ -20,6 +20,7 @@ const planningStandardNrCostRouter = Router();
  *             type: string
  *         separator:
  *             type: string
+ *             enum: ['.', ',', ';', '-']
  *         size_level:
  *             type: number
  *         type:

@@ -1,3 +1,4 @@
+import { Planning_standard_nr_cost } from "@prisma/client";
 import { StandardNrCostDTO } from "../../dto/funcClassification/StandardNrCostDTO";
 import { StandardNrCostUpdateDTO } from "../../dto/funcClassification/StandardNrCostUpdateDTO";
 import { AppError } from "../../helper/AppError.js";
@@ -18,7 +19,7 @@ class PlanningStandardNrCostService {
       .then(() => ({ status: 'success', message: 'Padrão natureza despesa atualizada.' }))
   }
 
-  async get(id: number): Promise<StandardNrCostDTO | null> {
+  async get(id: number): Promise<Planning_standard_nr_cost | null> {
     return await prismaInstance.prisma().planning_standard_nr_cost.findUnique({ where: { id } })
   }
 

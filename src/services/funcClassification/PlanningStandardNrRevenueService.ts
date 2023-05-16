@@ -1,3 +1,4 @@
+import { Planning_standard_nr_revenue } from "@prisma/client";
 import { StandardNrRevenueDTO } from "../../dto/funcClassification/StandardNrRevenueDTO";
 import { StandardNrRevenueUpdateDTO } from "../../dto/funcClassification/StandardNrRevenueUpdateDTO";
 import { AppError } from "../../helper/AppError.js";
@@ -18,7 +19,7 @@ class PlanningStandardNrRevenueService {
       .then(() => ({ status: 'success', message: 'Padrão natureza receita atualizado.' }))
   }
 
-  async get(id: number): Promise<StandardNrRevenueDTO | null> {
+  async get(id: number): Promise<Planning_standard_nr_revenue | null> {
     return await prismaInstance.prisma().planning_standard_nr_revenue.findUnique({ where: { id } })
   }
 

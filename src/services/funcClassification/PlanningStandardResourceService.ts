@@ -5,6 +5,7 @@ import { AppError } from "../../helper/AppError.js";
 import prismaInstance from "../../prisma/client.js"
 import { ResultResponseMessage } from "../../protocols/ResultResponseMessage.js";
 import planningTypeResourceService from './PlanningTypeResourceService.js';
+import { Planning_standard_resource } from '@prisma/client';
 
 class PlanningStandardResourceService {
   async create({ standards }: { standards: StandardResourceDTO[] }): Promise<ResultResponseMessage> {
@@ -34,7 +35,7 @@ class PlanningStandardResourceService {
       .then(() => ({ status: 'success', message: 'Padrão de recurso atualizado.' }))
   }
 
-  async get(id: string): Promise<StandardResourceDTO[] | null> {
+  async get(id: string): Promise<Planning_standard_resource[]> {
     return await prismaInstance.prisma().planning_standard_resource.findMany({ where: { number_of_standard: id } })
   }
 
